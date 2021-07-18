@@ -2,17 +2,14 @@
 
 namespace App\Entity;
 
-// On va appliquer la logique mapping via l'annotation @ORM
-// qui correspond à un dossier "Mapping" de Doctrine
-use DateTime;
+use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
- * Classe qui représente la table "movie" et ses renseignements
- * 
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=MovieRepository::class)
  */
 class Movie
 {

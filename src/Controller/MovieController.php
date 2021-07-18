@@ -2,11 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Movie;
 use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Genre;
+use App\Entity\Movie;
+use App\Repository\GenreRepository;
+use App\Repository\MovieRepository;
+use App\Repository\PersonRepository;
+use App\Repository\CastingRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
@@ -19,14 +25,14 @@ use Symfony\Component\Routing\Annotation\Route;
  * Add => ajoute
  * Delete => supprime
  */
-class TestController extends AbstractController
+class MovieController extends AbstractController
 {
     /**
-     * Test création entité
+     * création entité
      * 
      * Add
      * 
-     * @Route("/test/add", name="test_add")
+     * @Route("/movie/add", name="movie_add")
      */
     public function add(): Response
     {
@@ -56,7 +62,7 @@ class TestController extends AbstractController
     /**
      * Browse Movie
      * 
-     * @Route("/test/browse", name="test_browse")
+     * @Route("/", name="homepage")
      */
     public function browse()
     {
@@ -70,34 +76,36 @@ class TestController extends AbstractController
 
         dump($movies);
 
-        return new Response('Liste des films</body>');
+        return $this->render('movie/index.html.twig', [
+            'movies' => $movies,
+
+        ]);
     }
 
     /**
      * Read Movie
      * 
-     * @Route("/test/read/{id<\d+>}", name="test_read")
+     * @Route("/movie/read/{id<\d+>}", name="movie_read")
      */
-    public function read($id)
+    public function read (MovieRepository $movieRepository, $id, GenreRepository $genreRepository, PersonRepository $personRepository, CastingRepository $castingRepository)
     {
-        // Pour accéder aux données de la table movie
-        // on passe par le Repository de l'entité Movie
-        // PS : Movie::class => 'App\Entity\Movie'
-        $movieRepository = $this->getDoctrine()->getRepository(Movie::class);
 
         // On utilise les méthodes d'accès fournies par ce Repository
         $movie = $movieRepository->find($id);
 
         dump($movie);
+   
 
-        return new Response('Film n°'.$id.'</body>');
+        return $this->render('movie/read.html.twig', [
+            'movie' => $movie,
+        ]);
     }
 
 
     /**
      * Edit Movie
      * 
-     * @Route("/test/edit/{id<\d+>}")
+     * @Route("/movie/edit/{id<\d+>}")
      */
     public function edit($id)
     {
@@ -115,13 +123,13 @@ class TestController extends AbstractController
         // 2. Exécute les requêtes SQL nécessaires (ici, UPDATE)
         $entityManager->flush();
 
-        return $this->redirectToRoute('test_read', ['id' => $id]);
+        return $this->redirectToRoute('movie_read', ['id' => $id]);
     }
 
     /**
      * Delete Movie
      * 
-     * @Route("/test/delete/{id<\d+>}")
+     * @Route("/movie/delete/{id<\d+>}")
      */
     public function delete($id)
     {
@@ -141,6 +149,6 @@ class TestController extends AbstractController
         // 2. Exécute les requêtes SQL nécessaires (ici, UPDATE)
         $entityManager->flush();
 
-        return $this->redirectToRoute('test_browse');
+        return $this->redirectToRoute('movie_browse');
     }
 }

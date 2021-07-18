@@ -7,6 +7,15 @@
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+
+            
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="/css/app.css">
+            
         {% endblock %}
 
         {% block javascripts %}
@@ -14,6 +23,29 @@
         {% endblock %}
     </head>
     <body>
+
+        <header>
+        <a href="{{path('homepage')}}">
+        <div class="brand-logo">
+            <img src="/images/m2H7G6K9G6A0N4m2.png" alt="Brand Logo">
+        </div>
+        <div class="brand-name">
+            <h1>O'Ciné</h1>
+        </div>
+        </a>
+        
+        <input type="checkbox" id="toggle-btn">
+        <label for="toggle-btn" class="show-menu-btn"><i class="fas fa-bars"></i></label>
+
+            <nav>
+                <ul class="navigation">
+                    <li><a href="{{path('homepage')}}"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-plus-circle"></i> Add</a></li>
+                    <label for="toggle-btn" class="hide-menu-btn"><i class="fas fa-times"></i></label>
+                </ul>
+            </nav>
+        </header>
+
         {% block body %}{% endblock %}
     </body>
 </html>
