@@ -87,13 +87,13 @@ class MovieController extends AbstractController
      * 
      * @Route("/movie/read/{id<\d+>}", name="movie_read")
      */
-    public function read (MovieRepository $movieRepository, $id, GenreRepository $genreRepository, PersonRepository $personRepository, CastingRepository $castingRepository)
+    public function read (MovieRepository $movieRepository, $id)
     {
 
         // On utilise les méthodes d'accès fournies par ce Repository
         $movie = $movieRepository->find($id);
 
-        dump($movie);
+        dump($movie);      
    
 
         return $this->render('movie/read.html.twig', [

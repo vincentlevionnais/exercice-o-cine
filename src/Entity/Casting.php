@@ -35,14 +35,10 @@ class Casting
     private $person;
 
     /**
-     * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="casting")
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="castings")
      */
-    private $movies;
+    private $movie;
 
-    public function __construct()
-    {
-        $this->movies = new ArrayCollection();
-    }
 
     public function getRole(): ?string
     {
@@ -80,32 +76,14 @@ class Casting
         return $this;
     }
 
-    /**
-     * @return Collection|Movie[]
-     */
-    public function getMovies(): Collection
+    public function getMovie(): ?Movie
     {
-        return $this->movies;
+        return $this->movie;
     }
 
-    public function addMovie(Movie $movie): self
+    public function setMovie(?Movie $movie): self
     {
-        if (!$this->movies->contains($movie)) {
-            $this->movies[] = $movie;
-            $movie->setCasting($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMovie(Movie $movie): self
-    {
-        if ($this->movies->removeElement($movie)) {
-            // set the owning side to null (unless already changed)
-            if ($movie->getCasting() === $this) {
-                $movie->setCasting(null);
-            }
-        }
+        $this->movie = $movie;
 
         return $this;
     }

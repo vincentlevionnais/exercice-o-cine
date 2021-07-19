@@ -61,13 +61,21 @@ class Movie
     private $genres;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Casting::class, inversedBy="movies")
+     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie")
+     * @ORM\OrderBy({"creditOrder" = "ASC"})
      */
-    private $casting;
+    private $castings;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $poster;
+
 
     public function __construct()
     {
         $this->genres = new ArrayCollection();
+        $this->castings = new ArrayCollection();
     }
 
 
@@ -199,15 +207,46 @@ class Movie
         return $this;
     }
 
-    public function getCasting(): ?Casting
+    /**
+     * @return Collection|Casting[]
+     */
+    public function getCastings(): Collection
     {
-        return $this->casting;
+        return $this->castings;
     }
 
-    public function setCasting(?Casting $casting): self
+    public function addCasting(Casting $casting): self
     {
-        $this->casting = $casting;
+        if (!$this->castings->contains($casting)) {
+            $this->castings[] = $casting;
+            $casting->setMovie($this);
+        }
 
         return $this;
     }
+
+    public function removeCasting(Casting $casting): self
+    {
+        if ($this->castings->removeElement($casting)) {
+            // set the owning side to null (unless already changed)
+            if ($casting->getMovie() === $this) {
+                $casting->setMovie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPoster(): ?string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(?string $poster): self
+    {
+        $this->poster = $poster;
+
+        return $this;
+    }
+
 }

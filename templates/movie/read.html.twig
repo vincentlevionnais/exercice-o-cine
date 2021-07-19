@@ -3,14 +3,43 @@
 {% block title %}O'Ciné{% endblock %}
 
 {% block body %}
-    <div class ="container">
 
-    
-        
-        <h2>{{movie.title}}</h2>
-        <p>Release date : {{movie.releaseDate|date('d-m-Y')}}</p>
-        <p>Duration : {{movie.duration|date('H:i:s')}}</p>
+    <div class="title">
+        <p>{{movie.title}}</p>
+    </div>          
 
+    <div class ="container-read">
+
+        <div class="description">
+
+            <p>Release date : {{movie.releaseDate|date('d/m/Y')}}</p>
+            <p>Duration : {{movie.duration|date('H:i')}}</p>
+
+            <br>
+            
+            <ul><u>Genres :</u>
+            {% for genres in movie.genres %}
+                <li>{{genres.name}}</li>
+            {% endfor %}
+            </ul>
+
+            <br>
+
+            <ul>
+            <u> Rôles :</u>
+            {% for casting in movie.castings %}
+            <li>{{casting.role}} : {{casting.person}}</li>
+            {% endfor %}
+            </ul>
+
+        </div>
+
+        {% if movie.poster is not null %}
+            <div class="poster">
+                <img src="{{movie.poster}}" alt="poster">
+            </div>
+        {% endif %}
 
     </div>
+
 {% endblock %}
