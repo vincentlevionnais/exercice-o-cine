@@ -54,16 +54,6 @@ class MovieController extends AbstractController
         // PS : on ajoute le </body> pour afficher la Toolbar
     }
 
-     /**
-     * Add Page
-     * 
-     * @Route("/add", name="addpage")
-     */
-    public function addpage()
-    {
-            return $this->render('add/index.html.twig');
-    }
-
 
     /**
      * Browse Movie

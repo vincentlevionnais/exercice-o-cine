@@ -34,7 +34,7 @@ class Movie
     /**
      * Date de création
      * 
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
@@ -46,12 +46,12 @@ class Movie
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $releaseDate;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time", nullable=true)
      */
     private $duration;
 
@@ -120,7 +120,7 @@ class Movie
      *
      * @return  self
      */ 
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(?DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -161,7 +161,7 @@ class Movie
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
@@ -173,7 +173,7 @@ class Movie
         return $this->duration;
     }
 
-    public function setDuration(\DateTimeInterface $duration): self
+    public function setDuration(?\DateTimeInterface $duration): self
     {
         $this->duration = $duration;
 
