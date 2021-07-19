@@ -3,16 +3,18 @@
 {% block title %}O'Ciné{% endblock %}
 
 {% block body %}
+
+    <div class="title">
+        <h2>Movies</h2>
+    </div>  
+
     <div class ="container">
-
-    {% for movie in movies %}
- 
-        <div class = "card" >
-        <a href="{{path('movie_read', {id: movie.id}) }}">
-        <h2>{{movie.title}}</h2>
-        <p>Release date : {{movie.releaseDate|date('d-m-Y')}}</p>
-        </a></div>
-
-    {% endfor %}
+        {% for movie in movies %}
+            <div class = "card" >
+            <a href="{{path('movie_read', {id: movie.id}) }}">
+            <h2>{{movie.title}}</h2>
+            </a></div>
+        {% endfor %}
     </div>
+    
 {% endblock %}

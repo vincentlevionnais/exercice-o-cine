@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>Add Casting</h2>
+    </div>  
+
+    <div class = "container-read">
+
+        <div class = "description">
+            <p>New role</p>
+            <form action=""><input type="text" placeholder="ex : Forrest Gump"></form>
+            <br>
+            <p>Credit order</p>
+            <select name="" type="int" id="">
+                <option value="">--select--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <br><br>
+
+            <button type="submit">Validate</button>
+        </div>
+
+    </div>
+    
+{% endblock %}

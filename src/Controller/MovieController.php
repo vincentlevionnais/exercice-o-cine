@@ -3,13 +3,8 @@
 namespace App\Controller;
 
 use DateTime;
-use App\Entity\Genre;
 use App\Entity\Movie;
-use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
-use App\Repository\PersonRepository;
-use App\Repository\CastingRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +35,7 @@ class MovieController extends AbstractController
         $movie = new Movie();
 
         // On renseigne l'entité
-        $movie->setTitle('Interstellar');
+        $movie->setTitle('#');
         // Date sourante pour createdAt
         $movie->setCreatedAt(new DateTime());
 
@@ -58,6 +53,17 @@ class MovieController extends AbstractController
         return new Response('Film ajouté : '.$movie->getId(). '</body>');
         // PS : on ajoute le </body> pour afficher la Toolbar
     }
+
+     /**
+     * Add Page
+     * 
+     * @Route("/add", name="addpage")
+     */
+    public function addpage()
+    {
+            return $this->render('add/index.html.twig');
+    }
+
 
     /**
      * Browse Movie

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>Add</h2>
+    </div>  
+
+    <div class ="container">
+ 
+        <div class = "card" >
+        <a href="{{path('add_movie')}}">
+        <h2>Movie</h2>
+        </a></div>
+
+        <div class = "card" >
+        <a href="{{path('add_casting')}}">
+        <h2>Casting</h2>
+        </a></div>
+
+        <div class = "card" >
+        <a href="{{path('add_person')}}">
+        <h2>Person</h2>
+        </a></div>
+
+        <div class = "card" >
+        <a href="{{path('add_genre')}}">
+        <h2>Genre</h2>
+        </a></div>
+
+
+    </div>
+{% endblock %}
