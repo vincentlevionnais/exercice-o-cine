@@ -39,19 +39,18 @@ class MovieController extends AbstractController
      */
     public function movieShow(Movie $movie = null, CastingRepository $castingRepository)
     {
-
-        $castings = $castingRepository->findCastingJoinPerson($movie->getId());
-  
-
-        // Film non trouvé
+        // Si film non trouvé
         if ($movie === null) {
-             throw $this->createNotFoundException('Film non trouvé.');
+            throw $this->createNotFoundException('Film non trouvé.');
         }
+
+        // Pour classer les castings, on utilise notre requête custom
+        // qu'on oublie pas d'envoyer à la vue
+        $castings = $castingRepository->findAllByMovieJoinedToPerson($movie);
 
         return $this->render('main/movie_show.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
-
         ]);
     }
 
