@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,7 +35,7 @@ class Movie
     /**
      * Date de création
      * 
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -46,12 +47,12 @@ class Movie
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $releaseDate;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="time")
      */
     private $duration;
 
@@ -120,7 +121,7 @@ class Movie
      *
      * @return  self
      */ 
-    public function setCreatedAt(?DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -156,24 +157,24 @@ class Movie
         $this->movie->remove($movie);
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
+    public function getReleaseDate(): \DateTimeInterface
     {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(\DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
         return $this;
     }
 
-    public function getDuration(): ?\DateTimeInterface
+    public function getDuration(): \DateTimeInterface
     {
         return $this->duration;
     }
 
-    public function setDuration(?\DateTimeInterface $duration): self
+    public function setDuration(\DateTimeInterface $duration): self
     {
         $this->duration = $duration;
 

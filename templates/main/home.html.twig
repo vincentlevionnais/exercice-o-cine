@@ -10,7 +10,7 @@
 
     <div class ="container">
         {% for movie in movies %}
-            <a href="{{path('movie_read', {id: movie.id}) }}">
+            <a href="{{path('movie_show', {id: movie.id}) }}">
                 <div class = "card" >
                     <h2>{{movie.title}}</h2>
                 </div>

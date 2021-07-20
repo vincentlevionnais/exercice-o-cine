@@ -8,35 +8,33 @@
         <h2>Add Movie</h2>
     </div>  
 
-    <div class = "container-read">
+    <div class = "container-read description">
+        
+        <form class="form" method="post">
+            <p>Title</p>
+            <input type="text" id="title" name="title" placeholder="ex : Titanic">
+            <br>
+            {#<p>Release date</p>
+            <input type="datetime-local" id="releasedate" name="release_date" placeholder="Y-m-d H:m:s">
+            <br>
+            <p>Duration</p>
+            <input type="datetime-local" id="duration" name="duration" placeholder="HH:mm:ss">
+            <br>#}
+            <p>Poster</p>
+            <input type="text" id="poster" name="poster" placeholder="url">
+            <br>
+            <p>Genre</p>
+            <select type="int" id="genreId" name="genre">
+                <option value="">--select--</option>
+                {% for genre in genres %}
+                <option value="{{genre.id}}">{{genre.name}}</option>    
+                {% endfor %}
+            </select>
+            <br>
 
-        <div class = "description">
-            <form class="form" method="post">
-                <p>Title</p>
-                <input type="text" id="title" name="title" placeholder="ex : Titanic">
-                <br>
-                {#<p>Release date</p>
-                <input type="datetime-local" id="releasedate" name="release_date" placeholder="Y-m-d H:m:s">
-                <br>
-                <p>Duration</p>
-                <input type="datetime-local" id="duration" name="duration" placeholder="HH:mm:ss">
-                <br>#}
-                <p>Poster</p>
-                <input type="text" id="poster" name="poster" placeholder="url">
-                <br>
-                <p>Genre</p>
-                <select type="int" id="genreId" name="genre">
-                    <option value="">--select--</option>
-                    {% for genre in genres %}
-                    <option value="{{genre.id}}">{{genre.name}}</option>    
-                    {% endfor %}
-                </select>
-                <br><br>
 
-                <button type="submit">Validate</button>
-            </form>  
-
-        </div>
+            <button type="submit">Validate</button>
+        </form>  
 
     </div>
     

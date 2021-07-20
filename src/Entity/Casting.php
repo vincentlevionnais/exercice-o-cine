@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\CastingRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,7 +56,7 @@ class Casting
         return $this->creditOrder;
     }
 
-    public function setCreditOrder(?int $creditOrder): self
+    public function setCreditOrder(int $creditOrder): self
     {
         $this->creditOrder = $creditOrder;
 

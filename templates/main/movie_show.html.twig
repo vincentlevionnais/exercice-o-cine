@@ -28,7 +28,7 @@
             <ul>
             <u> Rôles :</u>
             {% for casting in movie.castings %}
-            <li>{{casting.role}} : {{casting.person}}</li>
+            <li>({{casting.creditOrder}}) {{casting.role}} : {{casting.person}}</li>
             {% endfor %}
             </ul>
 

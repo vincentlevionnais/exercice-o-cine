@@ -25,27 +25,33 @@
     <body>
 
         <header>
-        <a href="{{path('homepage')}}">
-        <div class="brand-logo">
-            <img src="/images/m2H7G6K9G6A0N4m2.png" alt="Brand Logo">
-        </div>
-        <div class="brand-name">
-            <h1>O'Ciné</h1>
-        </div>
-        </a>
-        
-        <input type="checkbox" id="toggle-btn">
-        <label for="toggle-btn" class="show-menu-btn"><i class="fas fa-bars"></i></label>
+            <a href="{{path('home')}}">
+            <div class="brand-logo">
+                <img src="/images/m2H7G6K9G6A0N4m2.png" alt="Brand Logo">
+            </div>
+            <div class="brand-name">
+                <h1>O'Ciné</h1>
+            </div>
+            </a>
+            
+            <input type="checkbox" id="toggle-btn">
+            <label for="toggle-btn" class="show-menu-btn"><i class="fas fa-bars"></i></label>
 
-            <nav>
-                <ul class="navigation">
-                    <li><a href="{{path('homepage')}}"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="{{path('addpage')}}"><i class="fas fa-plus-circle"></i> Add</a></li>
-                    <label for="toggle-btn" class="hide-menu-btn"><i class="fas fa-times"></i></label>
-                </ul>
-            </nav>
+                <nav>
+                    <ul class="navigation">
+                        <li><a href="{{path('home')}}"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="{{path('addpage')}}"><i class="fas fa-plus-circle"></i> Add</a></li>
+                        <label for="toggle-btn" class="hide-menu-btn"><i class="fas fa-times"></i></label>
+                    </ul>
+                </nav>
         </header>
 
-        {% block body %}{% endblock %}
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer>
+            O'Ciné &copy; Trinity 2021
+        </footer>
     </body>
 </html>
