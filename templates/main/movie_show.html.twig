@@ -18,6 +18,7 @@
             <br>
             
             <ul><u>Genres :</u>
+            {# Affichage des genres #}
             {% for genres in movie.genres %}
                 <li>{{genres.name}}</li>
             {% endfor %}
@@ -27,7 +28,9 @@
 
             <ul>
             <u> Rôles :</u>
-            {% for casting in movie.castings %}
+            {# Affichage des castings #}
+            {# {% for casting in movie.castings %} #}
+            {% for casting in castings %}
             <li>({{casting.creditOrder}}) {{casting.role}} : {{casting.person}}</li>
             {% endfor %}
             </ul>

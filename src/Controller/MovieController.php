@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Movie;
+use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +25,7 @@ class MovieController extends AbstractController
     {
 
         // On utilise les méthodes d'accès fournies par ce Repository
-        $movies = $movieRepository->findBy(
-            [],
-            ['title' => 'ASC']
-        );
+        $movies = $movieRepository->findAllOrderedByTitleAscQb();
 
         return $this->render('main/home.html.twig', [
             'movies' => $movies,
@@ -39,8 +37,11 @@ class MovieController extends AbstractController
      * 
      * @Route("/movie/{id<\d+>}", name="movie_show")
      */
-    public function movieShow(Movie $movie = null)
+    public function movieShow(Movie $movie = null, CastingRepository $castingRepository)
     {
+
+        $castings = $castingRepository->findCastingJoinPerson($movie->getId());
+  
 
         // Film non trouvé
         if ($movie === null) {
@@ -49,6 +50,8 @@ class MovieController extends AbstractController
 
         return $this->render('main/movie_show.html.twig', [
             'movie' => $movie,
+            'castings' => $castings,
+
         ]);
     }
 

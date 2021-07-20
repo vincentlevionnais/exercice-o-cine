@@ -19,6 +19,17 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
+    public function findAllOrderedByTitleAscQb()
+    {
+        // On crée un objet de type Query Builder, sur l'entité Movie
+        // 'm' = un alias pour l'entité movie
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */
