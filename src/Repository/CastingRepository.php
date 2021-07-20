@@ -40,7 +40,8 @@ class CastingRepository extends ServiceEntityRepository
             -- INNER JOIN person ON c.person_id = person.id
             INNER JOIN c.person AS p
             -- WHERE movie_id = 7
-            WHERE c.movie = :id'
+            WHERE c.movie = :id
+            ORDER BY c.creditOrder'
         )->setParameter('id', $movieId);
 
         return $query->getResult();
