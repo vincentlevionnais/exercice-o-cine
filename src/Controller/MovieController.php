@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Movie;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
@@ -14,8 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MovieController extends AbstractController
 {
-
-
     /**
      * Liste des films
      * 
@@ -48,10 +45,11 @@ class MovieController extends AbstractController
         // qu'on oublie pas d'envoyer à la vue
         $castings = $castingRepository->findAllByMovieJoinedToPerson($movie);
 
+        dump($movie);
+
         return $this->render('main/movie_show.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
         ]);
     }
-
 }
