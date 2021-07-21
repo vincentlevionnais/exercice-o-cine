@@ -1,14 +1,17 @@
 <?php
 
 namespace App\DataFixtures;
+
 use DateTime;
-use App\Entity\Person;
+use Faker;
 use App\Entity\Genre;
 use App\Entity\Movie;
+use App\Entity\Person;
+use App\Entity\Casting;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
+use App\DataFixtures\Provider\MovieDbProvider;
+
 
 class AppFixtures extends Fixture
 {
@@ -42,35 +45,70 @@ class AppFixtures extends Fixture
    
         $faker = \Faker\Factory::create('fr_FR');
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
+        $faker->addProvider(new \Xylis\FakerCinema\Provider\Character($faker));
 
-            $movie = Array();
-            for ($i = 0; $i < 20; $i++) {
-                $movie[$i] = new Movie();
-                $movie[$i]->setTitle($faker->movie);
-                $movie[$i]->setCreatedAt(new DateTime());
-                $movie[$i]->setReleaseDate($faker->dateTime());
-                $movie[$i]->setDuration($faker->dateTime());
-                $movie[$i]->setPoster($faker->imageUrl());
+            // Notre fournisseur de données
+            //$movieDbProvider = new MovieDbProvider();
 
-                $manager->persist($movie[$i]);
-            }
+            // Si on veut toujours les mêmes données
+            //$faker->seed('BABAR');
 
+
+            // Genres
             $genre = Array();
-            for ($i = 0; $i < 8; $i++) {
+            for ($i = 1; $i <= 20; $i++) {
                 $genre[$i] = new Genre();
-                $genre[$i]->setName($faker->movieGenre);
+                $genre[$i]->setName($faker->unique()->movieGenre());
 
                 $manager->persist($genre[$i]);                
             }
 
+            // Films
+            $movie = Array();
+            for ($i = 1; $i <= 20; $i++) {
+                $movie[$i] = new Movie();
+                $movie[$i]->setTitle($faker->unique()->movie());
+                $movie[$i]->setCreatedAt(new DateTime());
+                $movie[$i]->setReleaseDate($faker->dateTime());
+                $movie[$i]->setDuration($faker->dateTime());
+                $movie[$i]->setPoster($faker->unique()->imageUrl(400, 600, 'city', true, 'Faker'));
+
+                // Association de genres
+                for ($r = 1; $r <= mt_rand(1, 3); $r++) {
+                    $movie[$i]->addGenre($genre[array_rand($genre)]);
+                }
+
+                $manager->persist($movie[$i]);
+            }
+
+            // Personnes
             $person = Array();
-            for ($i = 0; $i < 40; $i++) {
+            for ($i = 1; $i <= 20; $i++) {
                 $person[$i] = new Person();
-                $person[$i]->setFirstname($faker->firstName);
-                $person[$i]->setLastname($faker->lastName);
+                $person[$i]->setFirstname($faker->firstName());
+                $person[$i]->setLastname($faker->lastName());
 
 
                 $manager->persist($person[$i]);                
+            }
+
+             // Castings
+            $casting = Array();
+            for ($c = 1; $c < 100; $c++) {
+                $casting[$i] = new Casting();
+                $casting[$i]->setRole($faker->character());
+                $casting[$i]->setCreditOrder(mt_rand(1, 10));
+
+                // On va chercher un film au hasard dans la liste des films créée au-dessus
+                // Variante avec mt_rand et count
+                $randomMovie = $movie[array_rand($movie)];
+                $casting[$i]->setMovie($randomMovie);
+
+                $randomPerson = $person[array_rand($person)];
+                $casting[$i]->setPerson($randomPerson);
+
+                $manager->persist($casting[$i]);
+
             }
 
 

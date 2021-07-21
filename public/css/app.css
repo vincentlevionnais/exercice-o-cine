@@ -188,7 +188,7 @@ footer {
     display: flex;
     border-radius: 1rem;
     box-shadow: 2px 2px 7px #43719b91;
-    margin: 1rem;
+    margin: 0.5rem;
     padding : 1rem;
     text-align: center;
 }
@@ -229,7 +229,7 @@ li {
 .poster img {
     width: 250px;
     margin: 1rem;
-    
+    border-radius: 0.5rem;
     box-shadow: 2px 2px 0 #f1c26a, 12px 12px 0 black;
     
 }
