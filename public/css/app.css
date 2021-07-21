@@ -193,6 +193,11 @@ footer {
     text-align: center;
 }
 
+.card-btn {
+    margin-top: 3rem;
+    padding : 0.5rem;
+}
+
 .card:hover {
     background: #ffdc6a;
 }

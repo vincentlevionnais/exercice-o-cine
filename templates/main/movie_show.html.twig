@@ -35,6 +35,14 @@
             {% endfor %}
             </ul>
 
+            <br>
+
+            <a href="{{path('movie_review', {id: movie.id})}}">
+            <div class = "container card card-btn" >
+                <h3>Add review</h3>
+            </div>
+            </a>
+
         </div>
 
         {% if movie.poster is not null %}

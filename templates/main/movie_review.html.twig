@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>{{movie.title}}</h2>
+    </div>          
+
+    <div class ="container-read">
+        <div class="description">
+
+{{ form_start(form) }}
+{{ form_end(form) }}
+            <a href="">
+                <div class = "container card card-btn" >
+                    <h3>Validate</h3>
+                </div>
+            </a>
+        </div>
+
+        {% if movie.poster is not null %}
+            <div class="poster">
+                <img src="{{movie.poster}}" alt="poster">
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
