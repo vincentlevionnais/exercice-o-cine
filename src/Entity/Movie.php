@@ -77,6 +77,10 @@ class Movie
      */
     private $reviews;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $rating;
 
     public function __construct()
     {
@@ -84,7 +88,6 @@ class Movie
         $this->castings = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
-
 
     /**
      * Get clé primaire
@@ -282,6 +285,18 @@ class Movie
                 $review->setMovie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }
