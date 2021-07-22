@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
+use App\Entity\Review;
+use App\Form\ReviewType;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
+use App\Repository\ReviewRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\HttpFoundation\Request;
 
 class MovieController extends AbstractController
 {
@@ -35,7 +36,7 @@ class MovieController extends AbstractController
      * 
      * @Route("/movie/{id<\d+>}", name="movie_show")
      */
-    public function movieShow(Movie $movie = null, CastingRepository $castingRepository)
+    public function movieShow(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
     {
         // Si film non trouvé
         if ($movie === null) {
@@ -45,42 +46,57 @@ class MovieController extends AbstractController
         // Pour classer les castings, on utilise notre requête custom
         // qu'on oublie pas d'envoyer à la vue
         $castings = $castingRepository->findAllByMovieJoinedToPerson($movie);
+        $reviews = $reviewRepository->findAll();
 
         dump($movie);
+        dump($reviews);
 
         return $this->render('main/movie_show.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
+
         ]);
     }
 
     /**
      * Commenter un film
      * 
-     * @Route("/movie/{id<\d+>}/review", name="movie_review")
+     * @Route("/movie/{id<\d+>}/add/review", name="movie_add_review", methods={"GET", "POST"})
      */
-    public function movieReview(Movie $movie = null)
+    public function movieAddReview(Movie $movie = null, Request $request)
     {
-        // Si film non trouvé
+        // Lorsque film non trouvé
         if ($movie === null) {
             throw $this->createNotFoundException('Film non trouvé.');
         }
 
-        $form = $this->createFormBuilder()
+        // Nouvelle critique
+        $review = new Review();
 
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('content', TextType::class)
-            ->add('rating')
-            ->add('reactions')
-            ->add('watchedAt')
-            ->getForm();
+        // Création du form, associé à l'entité $review
+        $form = $this->createForm(ReviewType::class, $review);
 
+        // Prendre en charge la requête
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        return $this->render('main/movie_review.html.twig', [
+            // Relation review <> movie
+            $review->setMovie($movie);
+
+            // On sauve la Review
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($review);
+            $em->flush();
+
+            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
+        }
+        
+
+        // afficher le form
+        return $this->render('main/movie_add_review.html.twig', [
             'movie' => $movie,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 

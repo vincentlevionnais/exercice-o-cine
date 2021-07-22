@@ -20,29 +20,42 @@ class Review
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
+     * 
+     * @Assert\NotBlank
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * 
+     * @Assert\NotBlank
+     * @Assert\Email
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * 
+     * @Assert\NotBlank
+     * @Assert\Length(min=10)
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Assert\NotBlank
+     * @Assert\Choice({5, 4, 3, 2, 1})
+     * ou
+     * @Assert\Range(min=1, max=5)
      */
     private $rating;
 
     /**
      * @ORM\Column(type="json")
+     * 
+     * @Assert\NotBlank
+     * @Assert\Choice({"smile", "cry", "think", "sleep", "dream"}, multiple=true)
      */
     private $reactions = [];
 
@@ -50,6 +63,12 @@ class Review
      * @ORM\Column(type="datetime_immutable")
      */
     private $watchedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $movie;
 
     public function getId(): ?int
     {
@@ -124,6 +143,18 @@ class Review
     public function setWatchedAt(\DateTimeImmutable $watchedAt): self
     {
         $this->watchedAt = $watchedAt;
+
+        return $this;
+    }
+
+    public function getMovie(): ?Movie
+    {
+        return $this->movie;
+    }
+
+    public function setMovie(?Movie $movie): self
+    {
+        $this->movie = $movie;
 
         return $this;
     }
