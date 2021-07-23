@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>BACK Movies <i class="fas fa-film"></i></h2>
+    </div>  
+
+    <div class ="container">
+        {% for casting in castings %}
+            
+                <div class = "card" >
+                    <h2>{{casting.movie}}</h2>
+                    <p>({{casting.credidOrder}}) {{casting.role}}</p>
+                    <p>{{casting.person}}</p>
+                </div>
+            <a href="{{path('movie_show', {id: movie.id}) }}" type="button">Edit</a>
+        {% endfor %}
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>Edit Movie</h2>
+    </div>  
+
+    <div class = "container-read description">
+        
+        <form class="form" method="post">
+            <p>Title</p>
+            <input type="text" id="title" name="title" value="{{movie.title}}" placeholder="ex : Titanic">
+            <br>
+            <p>Release date</p>
+            <input type="string" id="releasedate" name="release_date" placeholder="Y-m-d H:m:s">
+            <br>
+            <p>Duration</p>
+            <input type="datetime" id="duration" name="duration" placeholder="HH:mm:ss">
+            <br>
+            <p>Poster</p>
+            <input type="text" id="poster" name="poster" value="{{movie.poster}}" placeholder="url">
+            <br>
+
+
+            {% for genre in movie.genres %}{% set counter = ( counter | default(0) ) + 1 %}
+                <p>Genre n°{{counter}}</p>
+                
+                <select type="int" id="id" name="genre" >
+                    <option value="{{genre.id}}">{{genre.name}}</option>
+                    {% for genre in genres %}
+                    <option value="{{genre.id}}">{{genre.name}}</option>   
+                    {% endfor %} 
+                </select>
+                <br>
+            {% endfor %}
+
+
+
+            <button class="button-validate" type="submit">Validate</button>
+        </form>  
+
+    </div>
+    
+{% endblock %}

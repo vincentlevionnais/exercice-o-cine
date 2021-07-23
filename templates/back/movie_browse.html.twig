@@ -5,12 +5,12 @@
 {% block body %}
 
     <div class="title">
-        <h2>Movies <i class="fas fa-film"></i></h2>
+        <h2>BACK Movies <i class="fas fa-film"></i></h2>
     </div>  
 
     <div class ="container">
         {% for movie in movies %}
-            <a href="{{path('movie_read', {id: movie.id}) }}">
+            <a href="{{path('back_movie_read', {id: movie.id}) }}">
                 <div class = "card" >
                     <h2>{{movie.title}}</h2>
                 </div>

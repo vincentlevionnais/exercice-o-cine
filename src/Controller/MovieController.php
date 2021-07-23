@@ -34,9 +34,9 @@ class MovieController extends AbstractController
     /**
      * Affiche un film
      * 
-     * @Route("/movie/{id<\d+>}", name="movie_show")
+     * @Route("/movie/{id<\d+>}", name="movie_read")
      */
-    public function movieShow(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
+    public function movieRead(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
     {
         // Si film non trouvé
         if ($movie === null) {
@@ -51,7 +51,7 @@ class MovieController extends AbstractController
         dump($movie);
         dump($reviews);
 
-        return $this->render('main/movie_show.html.twig', [
+        return $this->render('main/movie_read.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
 
