@@ -26,14 +26,24 @@ class Genre
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="genres")
+     * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
      */
-    private $movie;
+    private $movies;
 
     public function __construct()
     {
-        $this->movie = new ArrayCollection();
+        $this->movies = new ArrayCollection();
     }
+
+    /**
+     * Si besoin d'afficher un objet $genre
+     * PHP va essayer d'appeler cette méthode magique, si elle existe,
+     * avant de renvoyer une erreur
+     */
+    // public function __toString()
+    // {
+    //     return $this->name;
+    // }
 
     public function getId(): ?int
     {
@@ -55,15 +65,19 @@ class Genre
     /**
      * @return Collection|Movie[]
      */
-    public function getMovie(): Collection
+    public function getMovies(): Collection
     {
-        return $this->movie;
+        return $this->movies;
     }
 
     public function addMovie(Movie $movie): self
     {
-        if (!$this->movie->contains($movie)) {
-            $this->movie[] = $movie;
+        if (!$this->movies->contains($movie)) {
+            $this->movies[] = $movie;
+            // Même si on se trompe de sens sur qui doit détenir la relation
+            // On renseigne l'entité qui détient la relation
+            // afin que cela fonctionne tout de même
+            $movie->addGenre($this);
         }
 
         return $this;
@@ -71,7 +85,9 @@ class Genre
 
     public function removeMovie(Movie $movie): self
     {
-        $this->movie->removeElement($movie);
+        if ($this->movies->removeElement($movie)) {
+            $movie->removeGenre($this);
+        }
 
         return $this;
     }

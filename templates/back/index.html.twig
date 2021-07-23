@@ -2,10 +2,12 @@
 
 {% block title %}O'Ciné{% endblock %}
 
+{% block menu_back %}active{% endblock %}
+
 {% block body %}
 
     <div class="title">
-        <h2>Welcome to the BACK!</h2>
+        <h2>Welcome in the BACK!</h2>
     </div>  
 
     <div class ="container">
@@ -17,7 +19,7 @@
         </a>
 
         
-        <a href="{{path('back_casting_browse')}}">
+        <a href="">
             <div class = "card" >
                 <h2>Castings</h2>
             </div>
@@ -36,6 +38,18 @@
             </div>
         </a>
 
+        
+        <a href="{{path('back_job_index')}}">
+            <div class = "card" >
+                <h2>Jobs</h2>
+            </div>
+        </a>
+        
+        <a href="">
+            <div class = "card" >
+                <h2>Departments</h2>
+            </div>
+        </a>
 
     </div>
 {% endblock %}

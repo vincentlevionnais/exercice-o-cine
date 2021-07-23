@@ -30,6 +30,25 @@ class MovieRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * La même en DQL
+     */
+    public function findAllOrderedByTitleAscDql()
+    {
+        // C'est le Manager qui va nous permettre d'écrire une requête en DQL
+        $entityManager = $this->getEntityManager();
+
+        // En DQL, on précisé le FQCN (namespace + classe = App\Entity\Movie) de l'entité
+        $query = $entityManager->createQuery(
+            'SELECT m
+            FROM App\Entity\Movie m
+            ORDER BY m.title ASC'
+        );
+
+        // returns an array of Movie objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */

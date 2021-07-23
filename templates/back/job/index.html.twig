@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}O'Ciné{% endblock %}
+
+{% block menu_back %}active{% endblock %}
+
+{% block body %}
+
+    <div class="title">
+        <h2>BACK Jobs <i class="fab fa-black-tie"></i></h2>
+        
+            <button class="button-validate" ><a href="{{path('back_job_new')}}" >
+                <h3>Add Job</h3>
+            </a></button>
+    </div>  
+    
+    <div class ="container">
+        {% for job in jobs %}
+            <a href="{{path('back_job_show', {id: job.id}) }}">
+                <div class = "card" >
+                    <h2>{{job.id}} - {{job.name}}</h2>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    
+
+{% endblock %}

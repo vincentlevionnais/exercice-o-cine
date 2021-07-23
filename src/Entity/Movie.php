@@ -3,21 +3,29 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
-
+// On va appliquer la logique de mapping via l'annotation @ORM
+// qui correspond à un dossier "Mapping" de Doctrine
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Classe qui représente la table "movie" et ses enregistrements
+ * 
  * @ORM\Entity(repositoryClass=MovieRepository::class)
  */
 class Movie
 {
     /**
+     * Ceci est un DocBlock
+     * 
      * Clé primaire
      * Auto-increment
      * type INT
+     * 
+     * Ceci est une série d'annotations dans un DocBlock
      * 
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,6 +37,9 @@ class Movie
      * Titre
      * 
      * @ORM\Column(type="string", length=211)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Length(max=211)
      */
     private $title;
 
@@ -48,21 +59,30 @@ class Movie
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Assert\NotBlank
      */
     private $releaseDate;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="smallint")
+     * 
+     * @Assert\NotBlank
+     * @Assert\Positive
+     * @Assert\LessThanOrEqual(1440)
      */
     private $duration;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class, mappedBy="movie")
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+     * @ORM\OrderBy({"name"="ASC"})
+     * 
+     * @Assert\Count(min=1)
      */
     private $genres;
 
     /**
-     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie")
+     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", cascade={"remove"})
      * @ORM\OrderBy({"creditOrder" = "ASC"})
      */
     private $castings;
@@ -85,6 +105,7 @@ class Movie
     public function __construct()
     {
         $this->createdAt = new DateTime();
+        $this->releaseDate = new DateTime();
         $this->genres = new ArrayCollection();
         $this->castings = new ArrayCollection();
         $this->reviews = new ArrayCollection();
@@ -167,24 +188,24 @@ class Movie
         $this->movie->remove($movie);
     }
 
-    public function getReleaseDate(): \DateTimeInterface
+    public function getReleaseDate(): ?\DateTime
     {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(\DateTime $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
         return $this;
     }
 
-    public function getDuration(): \DateTimeInterface
+    public function getDuration():  ?int
     {
         return $this->duration;
     }
 
-    public function setDuration(\DateTimeInterface $duration): self
+    public function setDuration(int $duration): self
     {
         $this->duration = $duration;
 

@@ -2,6 +2,8 @@
 
 {% block title %}BACK - {{movie.title}}{% endblock %}
 
+{% block menu_back %}active{% endblock %}
+
 {% block body %}
 
     <div class="title">
@@ -13,18 +15,20 @@
         <div class="description">
 
             <p>Release date : {{movie.releaseDate|date('d/m/Y')}}</p>
-            <p>Duration : {{movie.duration|date('H:i')}}</p>
+            <p>Duration : {{movie.duration}}</p>
 
             <br>
             
-            <ul><u>Genres :</u>
+            <u>Genres :</u>
             {# Affichage des genres #}
             {% for genres in movie.genres %}
-                <li>{{genres.name}}</li>
+                {{genres.name}}{{ loop.last ? '' : ', ' }}
+            {% else %}
+                >No genre available
             {% endfor %}
-            </ul>
+            
 
-            <br>
+            <br><br>
 
             <ul>
             <u> Rôles :</u>
@@ -38,13 +42,13 @@
             <br><br>
 
             <a href="{{path('back_movie_edit', {id: movie.id})}}">
-            <div class = "container card card-btn" >
+            <div class = "container card card-btn button-edit">
                 <h3>Edit</h3>
             </div>
             </a>
 
-             <a href="{{path('back_movie_delete', {id: movie.id})}}" onclick="return confirm('Voulez-vous supprimez : {{ movie.title }} ?')">
-            <div class = "container card card-btn" >
+             <a href="{{path('back_movie_delete', {id: movie.id}) }}" onclick="return confirm('Voulez-vous supprimez : {{ movie.title }} ?')">
+            <div class = "container card card-btn  button-delete" >
                 <h3>Delete</h3>
             </div>
             </a>
@@ -59,32 +63,5 @@
 
     </div>
 
-    <div class="title">
-      <h3>Reviews</h3>
-    </div>
-
-    <div class="container-read">
-
-                
-    {% if movie.reviews is empty %}
-        <i>no reviews...</i> 
-    {% endif %}
-                    {% for review in movie.reviews %}
-                    <div class="card-review">
-                    
-                    <ul>
-                        
-                        <li>Par : {{review.username}}</li>
-                        <br>
-                        <li>Note : {{review.rating}}/5</li>
-
-                        <li>{{review.content}}</li>
-                    </ul>
-                    
-                    </div>    
-                    {% endfor %}
-             
-
-    </div>         
 
 {% endblock %}

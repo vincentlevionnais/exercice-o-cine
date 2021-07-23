@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DepartmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,16 +24,6 @@ class Department
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $updatedAt;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -49,26 +41,33 @@ class Department
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
     {
-        return $this->createdAt;
+        return $this->jobs;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function addJob(Job $job): self
     {
-        $this->createdAt = $createdAt;
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->setDepartment($this);
+        }
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function removeJob(Job $job): self
     {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getDepartment() === $this) {
+                $job->setDepartment(null);
+            }
+        }
 
         return $this;
     }

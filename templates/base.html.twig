@@ -40,13 +40,11 @@
                     <nav>
                         <ul class="navigation">
                             <li><a href="{{path('home')}}"><i class="fas fa-home"></i>Home</a></li>
-                            <li><a href="{{path('back')}}"><i class="fas fa-lock"></i>Back</a></li>
+                            <li><a href="{{path('back')}}" class="{% block menu_back %}{% endblock %}"><i class="fas fa-lock"></i>Back</a></li>
                             <li>
                                 <div class="search-container">
-                                <input type="text" name="search" placeholder="Search..." class="search-input">
-                                <a href="#" class="search-btn">
-                                <i class="fas fa-search"></i>      
-                                </a>
+                                    <input type="text" name="search" placeholder="Search..." class="search-input">
+                                    <a href="#" class="search-btn"><i class="fas fa-search"></i></a>      
                                 </div>
                             </li>
                             <label for="toggle-btn" class="hide-menu-btn"><i class="fas fa-times"></i></label>

@@ -12,26 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Team
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    // Clés composées sur Team
+    // @link https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/composite-primary-keys.html#use-case-3-join-table-with-metadata
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Movie::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $movie;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Person::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $person;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Job::class)
      * @ORM\JoinColumn(nullable=false)
      */

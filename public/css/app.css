@@ -82,6 +82,7 @@ h1 {
     display: none;
 }
 
+
 .show-menu-btn {
     margin: 0px;
     float: right;
@@ -248,18 +249,32 @@ li {
     outline: none;
 }
 
+#movie_genres {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+#movie_genres > input {
+
+    position: absolute;
+    margin-top: 3px;
+}
+#movie_genres > label {
+    display: block;
+    margin-left : 2rem;
+    margin-bottom: 0.5rem;
+
+}
+
 #review_reactions {
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     align-items: center;
 }
-
 #review_reactions > input {
 
     position: absolute;
     margin-top: 3px;
 }
-
 #review_reactions > label {
     display: block;
     margin-left : 2rem;
@@ -312,6 +327,15 @@ main input , main select{
     background: #ffdc6a;
 }
 
+.button-edit:hover {
+    background: #38a7e7;
+    color: white;
+}
+.button-delete:hover {
+    background: #e63131;
+    color: white;
+}
+
   /*==================//
  //    SEARCH-NAV    //
 //==================*/
@@ -354,3 +378,8 @@ main input , main select{
 .search-container:hover{
   padding-left : 1.5rem; 
 }
+
+.navigation li a.active {
+    color: #000000;
+    
+} 

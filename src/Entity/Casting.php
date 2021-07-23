@@ -19,25 +19,31 @@ class Casting
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=100)
      */
     private $role;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="smallint")
      */
     private $creditOrder;
 
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="castings")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $person;
 
     /**
      * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="castings")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $movie;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getRole(): ?string
     {

@@ -2,12 +2,18 @@
 
 {% block title %}O'Ciné{% endblock %}
 
+{% block menu_back %}active{% endblock %}
+
 {% block body %}
 
     <div class="title">
         <h2>BACK Movies <i class="fas fa-film"></i></h2>
+        
+            <button class="button-validate" ><a href="{{path('back_movie_add')}}" >
+                <h3>Add Movie</h3>
+            </a></button>
     </div>  
-
+    
     <div class ="container">
         {% for movie in movies %}
             <a href="{{path('back_movie_read', {id: movie.id}) }}">

@@ -1,0 +1,5 @@
+{{ form_start(form, { attr: {novalidate: 'novalidate'} }) }}
+    {# form_widget() Génère tous les champs du form #}
+    {{ form_widget(form) }}
+    <button  class="button-validate" type="submit">Enregistrer</button>
+{{ form_end(form) }}
