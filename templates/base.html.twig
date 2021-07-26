@@ -39,8 +39,8 @@
 
                     <nav>
                         <ul class="navigation">
-                            <li><a href="{{path('home')}}"><i class="fas fa-home"></i>Home</a></li>
-                            <li><a href="{{path('back')}}" class="{% block menu_back %}{% endblock %}"><i class="fas fa-lock"></i>Back</a></li>
+                            <li><a href="{{path('home')}}" ><i class="fas fa-home"></i>Home</a></li>
+                            <li><a href="{% if is_granted('ROLE_USER') %} {{path('app_logout')}}{% else %}{{path('app_login')}}{% endif %}" class="{% block menu_active %}{% endblock %}"><i class="fas fa-sign-{% block menu_logout %}in-alt{% endblock %}"></i>Admin</a></li>
                             <li>
                                 <div class="search-container">
                                     <input type="text" name="search" placeholder="Search..." class="search-input">

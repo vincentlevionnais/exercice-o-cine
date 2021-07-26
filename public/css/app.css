@@ -336,6 +336,11 @@ main input , main select{
     color: white;
 }
 
+.form-center {
+    display: block;
+    text-align: center;
+}
+
   /*==================//
  //    SEARCH-NAV    //
 //==================*/
@@ -381,5 +386,5 @@ main input , main select{
 
 .navigation li a.active {
     color: #000000;
-    
+ 
 } 
