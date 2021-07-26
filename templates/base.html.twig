@@ -25,7 +25,7 @@
     <body>
         <div id="wrap">
             <header>
-                <a href="{{path('home')}}">
+                <a href="{{path('app_logout')}}">
                     <div class="brand-logo">
                         <img src="/images/m2H7G6K9G6A0N4m2.png" alt="Brand Logo">
                     </div>
@@ -39,7 +39,7 @@
 
                     <nav>
                         <ul class="navigation">
-                            <li><a href="{{path('home')}}" ><i class="fas fa-home"></i>Home</a></li>
+                            <li><a href="{{path('app_logout')}}"><i class="fas fa-home"></i>Home</a></li>
                             <li><a href="{% if is_granted('ROLE_USER') %} {{path('app_logout')}}{% else %}{{path('app_login')}}{% endif %}" class="{% block menu_active %}{% endblock %}"><i class="fas fa-sign-{% block menu_logout %}in-alt{% endblock %}"></i>Admin</a></li>
                             <li>
                                 <div class="search-container">
@@ -53,6 +53,18 @@
             </header>
 
             <main>
+            
+                
+                {% if is_granted('ROLE_USER') %}
+
+                <div class ="container">
+                    <div class=" card card-btn button-index">
+                            <a href="{{path('back')}}"><i class="far fa-bookmark"></i> Index admin</a>
+                    </div>
+                </div>
+
+                {% endif %}   
+            
                 {% block body %}{% endblock %}
             </main>
 
