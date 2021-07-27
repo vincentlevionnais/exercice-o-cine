@@ -250,6 +250,22 @@ li {
     outline: none;
 }
 
+#user_roles {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+#user_roles > input {
+
+    position: absolute;
+    margin-top: 3px;
+}
+#user_roles > label {
+    display: block;
+    margin-left : 2rem;
+    margin-bottom: 0.5rem;
+
+}
+
 #movie_genres {
     margin-top: 0.5rem;
     margin-bottom: 1rem;
@@ -341,7 +357,7 @@ main input , main select{
 }
 .button-index{
     margin-top: -2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     box-shadow: 2px 2px 7px #43709b3b;
 
 }

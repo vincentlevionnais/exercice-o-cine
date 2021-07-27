@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType
 {
@@ -15,22 +17,27 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('roles', ChoiceType::class, [
-                    // @link https://symfony.com/doc/current/reference/forms/types/choice.html#choices
-                    'placeholder' => '-- choisissez --',
                     'choices' => [
                         // Label => valeur
-                        'Admin' => 'ROLE_ADMIN',
-                        'User' => 'ROLE_USER',
+                        'User' => "ROLE_USER",
+                        'Manager' => "ROLE_MANAGER",
+                        'Administrateur' => "ROLE_ADMIN",
                     ],
-                        
-                    // Pas nécessaire ici car valeurs par défaut pour un SELECT,
-                    // maos pour info :
                     // Plusieurs choix possibles ou non
-                    'multiple' => false,
+                    'multiple' => true,
                     // Chaque choix à son widget HTML ou non
-                    'expanded' => false,
+                    'expanded' => true,
                 ])
-            ->add('password')
+                ->add('password', RepeatedType::class, [
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                    'required' => true,
+                    'first_options'  => [
+                        'label' => 'Mot de passe',
+                        'help' => 'Minimum eight characters, at least one letter, one number and one special character.'
+                    ],
+                    'second_options' => ['label' => 'Répéter le mot de passe'],
+                ])
         ;
         
     }

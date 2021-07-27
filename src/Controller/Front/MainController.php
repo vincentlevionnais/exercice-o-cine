@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Movie;
 use App\Entity\Review;
@@ -26,7 +26,7 @@ class MainController extends AbstractController
         // On utilise les méthodes d'accès fournies par ce Repository
         $movies = $movieRepository->findAllOrderedByTitleAscQb();
 
-        return $this->render('main/home.html.twig', [
+        return $this->render('front/main/home.html.twig', [
             'movies' => $movies,
         ]);
     }
@@ -51,7 +51,7 @@ class MainController extends AbstractController
         dump($movie);
         dump($reviews);
 
-        return $this->render('main/movie_read.html.twig', [
+        return $this->render('front/main/movie_read.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
 
@@ -61,9 +61,9 @@ class MainController extends AbstractController
     /**
      * Commenter un film
      * 
-     * @Route("/movie/{id<\d+>}/add/review", name="movie_add_review", methods={"GET", "POST"})
+     * @Route("/movie/{id}/add/review", name="movie_add_review", methods={"GET", "POST"})
      */
-    public function movieAddReview(Movie $movie = null, Request $request)
+    public function movieAddReview(Movie $movie = null, Request $request): Response
     {
         // Lorsque film non trouvé
         if ($movie === null) {
@@ -81,6 +81,15 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Si le form était sur la page qui affiche le film
+            // on aurait pu protéger l'accès à ajout du form dans le code, via
+            // $this->denyAccessUnlessGranted('ROLE_USER');
+            // OU BIEN
+            // utiliser l'option "methods" de l'ACL
+            // @link https://symfony.com/doc/current/security/access_control.html
+            // - { path: ^/movie/show/\d+, roles: ROLE_USER, methods: POST }
+
+
             // Relation review <> movie
             $review->setMovie($movie);
 
@@ -89,14 +98,14 @@ class MainController extends AbstractController
             $em->persist($review);
             $em->flush();
 
-            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
+            return $this->redirectToRoute('movie_read', ['id' => $movie->getId()]);
         }
         
 
         // afficher le form
-        return $this->render('main/movie_add_review.html.twig', [
-            'movie' => $movie,
+        return $this->render('front/main/movie_add_review.html.twig', [
             'form' => $form->createView(),
+            'movie' => $movie,
         ]);
     }
 

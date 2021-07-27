@@ -11,12 +11,47 @@ use App\Entity\Casting;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\MovieDbProvider;
-
+use App\Entity\User;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+
+
+
+        // 3 users "en dur" : USER, MANAGER, ADMIN
+        // mot de passe = user, manager, admin
+        print('ROLE_USER' . PHP_EOL);
+        $user = new User();
+        $user->setEmail('user@user.com');
+        // "user" via "bin/console security:hash-password"
+        $user->setPassword('$2y$13$h.eZWrS5PJya7zNMNsKcXe8LUSVBtN2PBy8WHxmdHgAFjHG/rW.dG');
+        $user->setRoles(['ROLE_USER']);
+
+        $manager->persist($user);
+
+        print('ROLE_MANAGER' . PHP_EOL);
+        $userManager = new User();
+        $userManager->setEmail('manager@manager.com');
+        // "manager" via "bin/console security:hash-password"
+        $userManager->setPassword('$2y$13$3YxSfXMdyaKdplTEd07.SuDnbjAQZIAn8NLbhHzTLUnl1N7oegQg2');
+        $userManager->setRoles(['ROLE_MANAGER']);
+
+        $manager->persist($userManager);
+
+        print('ROLE_ADMIN' . PHP_EOL);
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        // "admin" via "bin/console security:hash-password"
+        $admin->setPassword('$2y$13$L81zK/fTjQikyz3PtBmbL.WdDILXR.Ppn.whBAvLJsbaFu4Fu0zVe');
+        $admin->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+
+
+
+
 /*
         $movie = array(
             0 => array('title' => 'Interstellar', 'releaseDate' => '2014-11-05', 'duration' => '02:49:00', 'poster' => 'https://fr.web.img6.acsta.net/r_1920_1080/img/08/fe/08feaecbc56c480c082003c632f3bc2f.jpg'),
@@ -55,6 +90,7 @@ class AppFixtures extends Fixture
 
 
             // Genres
+            print('FAKER GENRES' . PHP_EOL);
             $genre = Array();
             for ($i = 1; $i <= 20; $i++) {
                 $genre[$i] = new Genre();
@@ -64,6 +100,7 @@ class AppFixtures extends Fixture
             }
 
             // Films
+            print('FAKER MOVIES' . PHP_EOL);
             $movie = Array();
             for ($i = 1; $i <= 20; $i++) {
                 $movie[$i] = new Movie();
@@ -83,6 +120,7 @@ class AppFixtures extends Fixture
             }
 
             // Personnes
+            print('FAKER PERSONS' . PHP_EOL);
             $person = Array();
             for ($i = 1; $i <= 20; $i++) {
                 $person[$i] = new Person();
@@ -94,6 +132,7 @@ class AppFixtures extends Fixture
             }
 
              // Castings
+             print('FAKER CASTINGS' . PHP_EOL);
             $casting = Array();
             for ($c = 1; $c < 100; $c++) {
                 $casting[$i] = new Casting();
@@ -111,7 +150,6 @@ class AppFixtures extends Fixture
                 $manager->persist($casting[$i]);
 
             }
-
 
         $manager->flush();
      

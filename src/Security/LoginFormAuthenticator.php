@@ -52,8 +52,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        // dd($token);
+        // @todo Rediriger le user selon son rôle
+        // MANAGER => admin
+        // USER => home
+
         // FSinon on accède à la page d'admin par défaut
-        return new RedirectResponse($this->urlGenerator->generate('back'));
+        return new RedirectResponse($this->urlGenerator->generate('home'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
