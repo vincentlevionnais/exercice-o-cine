@@ -48,9 +48,6 @@ class MainController extends AbstractController
         $castings = $castingRepository->findAllByMovieJoinedToPerson($movie);
         $reviews = $reviewRepository->findAll();
 
-        dump($movie);
-        dump($reviews);
-
         return $this->render('front/main/movie_read.html.twig', [
             'movie' => $movie,
             'castings' => $castings,

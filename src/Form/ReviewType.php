@@ -24,7 +24,7 @@ class ReviewType extends AbstractType
 
             ->add('email', EmailType::class, [
                 'label' => 'E-mail',
-                'attr' => ['placeholder' => 'toto.tototo@toto.com']
+                'attr' => ['placeholder' => 'toto@toto.com']
             ])
 
             ->add('content',TextareaType::class, [

@@ -11,13 +11,13 @@
     <div class ="container-read">
         <div class="description">
 
-{% include "main/_form_add_review.html.twig" %}
+{% include "/front/main/_form_add_review.html.twig" %}
 
         </div>
 
         {% if movie.poster is not null %}
             <div class="poster">
-                <img src="{{movie.poster}}" alt="poster">
+                <img src="{{ asset('/images/default-movie.jpg') }}">
             </div>
         {% endif %}
 
