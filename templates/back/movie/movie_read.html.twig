@@ -55,7 +55,7 @@
 
         {% if movie.poster is not null %}
             <div class="poster">
-                <img src="{{movie.poster}}" alt="poster">
+                <img src="{{ asset('/images/default-movie.jpg') }}">
             </div>
         {% endif %}
 
