@@ -51,7 +51,6 @@ class MainController extends AbstractController
         return $this->render('front/main/movie_read.html.twig', [
             'movie' => $movie,
             'castings' => $castings,
-
         ]);
     }
 

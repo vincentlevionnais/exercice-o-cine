@@ -6,6 +6,7 @@ use App\Entity\Review;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -67,9 +68,10 @@ class ReviewType extends AbstractType
                 'expanded' => true,
             ])
 
-            ->add('watchedAt', DateTimeType::class, [
+            ->add('watchedAt', DateType::class, [
                 'label' => 'Vous avez vu ce film le :',
-                'input' => 'datetime_immutable',
+                'input' => 'datetime_immutable',  
+                'years' => range( date('Y'), date('Y') - 10 ),
             ])
         ;
     }

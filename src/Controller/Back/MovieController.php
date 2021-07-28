@@ -5,15 +5,16 @@ namespace App\Controller\Back;
 use DateTime;
 use App\Entity\Genre;
 use App\Entity\Movie;
-use App\Form\MovieType;
 use App\Entity\Person;
 use App\Entity\Casting;
+use App\Form\MovieType;
+use Doctrine\ORM\Mapping\Id;
+use App\Service\MessageGenerator;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\CastingRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,18 +33,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MovieController extends AbstractController
 {
 
-        /**
-         * Back
-         * 
-         * @Route("/back", name="back")
-         */
-        public function backHome()
-        {
-                return $this->render('back/index.html.twig');
-        }
-
-
-                                   
+                                 
 
         //      __                               
         //     / /_  _________ _      __________ 
@@ -107,7 +97,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/edit/{id<\d+>}", name="back_movie_edit", methods={"GET", "POST"})
          */
-        public function edit(Request $request, Movie $movie): Response
+        public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
         {
             // 404 ?
             if ($movie === null) {
@@ -123,8 +113,11 @@ class MovieController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 // Pas de persist() pour un edit
                 $em->flush();
-    
+
+                $this->addFlash('success', $messageGenerator->getRandomMessage());
+                
                 return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
+                
             }
     
             // Affiche le form
@@ -143,7 +136,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
          */
-        public function add(Request $request): Response
+        public function add(Request $request, MessageGenerator $messageGenerator): Response
         {
                 $movie = new Movie();
 
@@ -156,6 +149,8 @@ class MovieController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($movie);
                 $em->flush();
+
+                $this->addFlash('success', $messageGenerator->getRandomMessage());
 
                 return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
                 }
@@ -179,7 +174,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/delete/{id<\d+>}", name="back_movie_delete", methods={"GET"})
          */
-        public function delete(Movie $movie = null, EntityManagerInterface $entityManager): Response
+        public function delete(Movie $movie = null,MessageGenerator $messageGenerator, EntityManagerInterface $entityManager): Response
         {
             // 404 ?
             // Conditions Yoda
@@ -190,6 +185,8 @@ class MovieController extends AbstractController
     
             $entityManager->remove($movie);
             $entityManager->flush();
+
+            $this->addFlash('success', $messageGenerator->getRandomMessage());
     
             return $this->redirectToRoute('back');
         }

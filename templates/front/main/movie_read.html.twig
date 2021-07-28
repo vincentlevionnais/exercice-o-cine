@@ -74,10 +74,11 @@
                     
                     <ul>                        
                         <li>Par : {{review.username}}</li>
-                        {#<li>le {{ review.publishedAt|date('d-m-Y H:i') }}</li>#}
+                        <li>Vu le {{ review.watchedAt|date('d-m-Y') }}</li>
                         <br>
                         <li>Note : {{review.rating}}/5</li>
-
+                        <li>Réactions : {% for reaction in review.reactions %} 
+                        {{reaction}}{% endfor %}</li>
                         <li>{{review.content}}</li>
                     </ul>
                     

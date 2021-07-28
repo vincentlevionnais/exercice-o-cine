@@ -8,15 +8,11 @@
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
-
-            
-
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="/css/app.css">
             <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.png') }}" />
-            
         {% endblock %}
 
         {% block javascripts %}
@@ -41,19 +37,18 @@
                     <nav>
                         <ul class="navigation">
                             <li><a href="{{path('home')}}"><i class="fas fa-home"></i>Home</a></li>
-
+                            {% if is_granted('ROLE_MANAGER') %}
+                            <li><a href="{{path('back_movie_browse')}}"><i class="fas fa-user-check"></i></i>{% if is_granted('ROLE_ADMIN') %}
+                                                                                            Admin</a></li>
+                                                                                        {% elseif is_granted('ROLE_MANAGER') %}
+                                                                                            Manager</a></li>
+                                                                                        {% endif %}{% endif %}
+                     
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <li><a href=" {{path('app_logout')}}" class="active"><i class="fas fa-sign-out-alt"></i>Disconnect
-                                                                                                                {% if is_granted('ROLE_ADMIN') %}
-                                                                                                                    Admin
-                                                                                                                {% elseif is_granted('ROLE_MANAGER') %}
-                                                                                                                    Manager
-                                                                                                                {% elseif is_granted('ROLE_USER') %}
-                                                                                                                    User
-                                                                                                                {% endif %}</a></li>
+                            <li><a href=" {{path('app_logout')}}" class="active"><i class="fas fa-sign-out-alt"></i>Disconnect</a></li>
                         {% else %}
                             <li><a href="{{path('app_login')}}" class=""><i class="fas fa-sign-in-alt"></i>Connect</a></li>
-                    {% endif %}                            
+                    {% endif %}                   
                             <li>
                                 <div class="search-container">
                                     <input type="text" name="search" placeholder="Search..." class="search-input">
@@ -63,18 +58,17 @@
                             <label for="toggle-btn" class="hide-menu-btn"><i class="fas fa-times"></i></label>
                         </ul>
                     </nav>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        {% include 'back/subnav.html.twig' %}
+                    {% endif %}          
             </header>
 
-            <main>            
-            {% if is_granted('ROLE_MANAGER', 'ROLE_ADMIN')%}
-                <div class ="container">
-                    <div class=" card card-btn button-index">
-                            <a href="{{path('back')}}"><i class="far fa-bookmark"></i> Index admin</a>
-                    </div>
-                </div>
-            {% endif %}
+            <main> 
+
+                {{ include('_flash_messages.html.twig') }}
 
                 {% block body %}{% endblock %}
+
             </main>
 
             <footer>
