@@ -12,9 +12,15 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\MovieDbProvider;
 use App\Entity\User;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     public function load(ObjectManager $manager)
     {
 
@@ -105,6 +111,9 @@ class AppFixtures extends Fixture
             for ($i = 1; $i <= 20; $i++) {
                 $movie[$i] = new Movie();
                 $movie[$i]->setTitle($faker->unique()->movie());
+
+                $movie[$i]->setTitleSlug($this->slugger->slug($movie[$i]->getTitle())->lower());
+
                 $movie[$i]->setReleaseDate($faker->dateTimeBetween('-80years', 'now'));
                 $movie[$i]->setDuration($faker->numberBetween(15, 360));
                 $movie[$i]->setPoster('images/star.png');

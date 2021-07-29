@@ -102,6 +102,11 @@ class Movie
      */
     private $rating;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titleSlug;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -319,6 +324,18 @@ class Movie
     public function setRating(?int $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getTitleSlug(): ?string
+    {
+        return $this->titleSlug;
+    }
+
+    public function setTitleSlug(string $titleSlug): self
+    {
+        $this->titleSlug = $titleSlug;
 
         return $this;
     }

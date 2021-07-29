@@ -34,7 +34,7 @@ class MainController extends AbstractController
     /**
      * Affiche un film
      * 
-     * @Route("/movie/{id<\d+>}", name="movie_read")
+     * @Route("/movie/{titleSlug}", name="movie_read")
      */
     public function movieRead(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
     {
@@ -57,7 +57,7 @@ class MainController extends AbstractController
     /**
      * Commenter un film
      * 
-     * @Route("/movie/{id}/add/review", name="movie_add_review", methods={"GET", "POST"})
+     * @Route("/movie/{titleSlug}/add/review", name="movie_add_review", methods={"GET", "POST"})
      */
     public function movieAddReview(Movie $movie = null, Request $request): Response
     {
