@@ -2,30 +2,41 @@
 
 namespace App\DataFixtures;
 
-use DateTime;
 use Faker;
+use DateTime;
+use App\Entity\User;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Casting;
+use App\Service\MySlugger;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\MovieDbProvider;
-use App\Entity\User;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
-    public function __construct(SluggerInterface $slugger)
+    // Le service MySlugger
+    private $mySlugger;
+
+    // Injection des services nécessaires
+    public function __construct(MySlugger $mySlugger)
     {
-        $this->slugger = $slugger;
+        $this->mySlugger = $mySlugger;
     }
 
     public function load(ObjectManager $manager)
     {
 
 
-
+        //  ██████╗  ██████╗ ██╗     ███████╗███████╗
+        //  ██╔══██╗██╔═══██╗██║     ██╔════╝██╔════╝
+        //  ██████╔╝██║   ██║██║     █████╗  ███████╗
+        //  ██╔══██╗██║   ██║██║     ██╔══╝  ╚════██║
+        //  ██║  ██║╚██████╔╝███████╗███████╗███████║
+        //  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝
+        //                                                      
         // 3 users "en dur" : USER, MANAGER, ADMIN
         // mot de passe = user, manager, admin
         print('ROLE_USER' . PHP_EOL);
@@ -56,34 +67,13 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
 
+        //  ███████╗ █████╗ ██╗  ██╗███████╗██████╗ 
+        //  ██╔════╝██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
+        //  █████╗  ███████║█████╔╝ █████╗  ██████╔╝
+        //  ██╔══╝  ██╔══██║██╔═██╗ ██╔══╝  ██╔══██╗
+        //  ██║     ██║  ██║██║  ██╗███████╗██║  ██║
+        //  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
 
-
-/*
-        $movie = array(
-            0 => array('title' => 'Interstellar', 'releaseDate' => '2014-11-05', 'duration' => '02:49:00', 'poster' => 'https://fr.web.img6.acsta.net/r_1920_1080/img/08/fe/08feaecbc56c480c082003c632f3bc2f.jpg'),
-            1 => array('title' => 'Le Loup de Wall Street', 'releaseDate' => '2015-11-05', 'duration' => '02:54:00', 'poster' => 'https://fr.web.img4.acsta.net/r_1920_1080/img/37/4f/374f264b6bb0a2333d5747d274fbadc3.jpg'),
-            2 => array('title' => 'Forrest Gump', 'releaseDate' => '2016-11-05', 'duration' => '01:49:00', 'poster' => 'https://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/13/15/12/514297.jpg'), 
-            3 => array('title' => 'Arrête-moi si tu peux', 'releaseDate' => '2017-11-05', 'duration' => '01:55:00', 'poster' => 'https://fr.web.img3.acsta.net/r_1920_1080/medias/nmedia/00/02/54/32/aff2.jpg'),
-            4 => array('title' => 'Into The Wild', 'releaseDate' => '2018-11-05', 'duration' => '02:30:00', 'poster' => 'https://fr.web.img4.acsta.net/r_1920_1080/medias/nmedia/18/64/47/78/18869162.jpg'),
-            5 => array('title' => 'Jobs', 'releaseDate' => '2019-11-05', 'duration' => '03:01:00', 'poster' => 'https://fr.web.img4.acsta.net/r_1920_1080/pictures/210/244/21024430_20130805132418528.jpg'),
-            6 => array('title' => 'Shutter Island', 'releaseDate' => '2020-11-05', 'duration' => '02:29:00', 'poster' => ''),
-            7 => array('title' => 'Looper', 'releaseDate' => '2021-11-05', 'duration' => '02:10:00', 'poster' => ''),
-            8 => array('title' => 'Seul sur Mars', 'releaseDate' => '2010-11-05', 'duration' => '02:01:00', 'poster' => ''),
-            9 => array('title' => 'Gangs of New-York', 'releaseDate' => '2009-11-05', 'duration' => '02:33:00', 'poster' => ''),
-        );
-        
-        for ([$i] = 0; [$i] < 9; [$i++]) {
-            $movie[$i] = new Movie();
-            $movie[$i]->setTitle($movie[$i]['title']);
-            $movie[$i]->setCreatedAt(new DateTime());
-            $movie[$i]->setReleaseDate(new DateTime($movie[$i]['releaseDate']));
-            $movie[$i]->setDuration(new DateTime($movie[$i]['duration']));
-            $movie[$i]->setPoster($movie[$i]['poster']);
-
-            $manager->persist($movie[$i]);
-        }
-*/
-   
         $faker = \Faker\Factory::create('fr_FR');
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Character($faker));
@@ -94,8 +84,14 @@ class AppFixtures extends Fixture
             // Si on veut toujours les mêmes données
             //$faker->seed('BABAR');
 
-
-            // Genres
+                
+            //     ______                         
+            //    / ____/__  ____  ________  _____
+            //   / / __/ _ \/ __ \/ ___/ _ \/ ___/
+            //  / /_/ /  __/ / / / /  /  __(__  ) 
+            //  \____/\___/_/ /_/_/   \___/____/  
+            //                      
+            //                        
             print('FAKER GENRES' . PHP_EOL);
             $genre = Array();
             for ($i = 1; $i <= 20; $i++) {
@@ -105,14 +101,24 @@ class AppFixtures extends Fixture
                 $manager->persist($genre[$i]);                
             }
 
-            // Films
+
+            //      _______ __              
+            //     / ____(_) /___ ___  _____
+            //    / /_  / / / __ `__ \/ ___/
+            //   / __/ / / / / / / / (__  ) 
+            //  /_/   /_/_/_/ /_/ /_/____/  
+            //                              
+            //          
             print('FAKER MOVIES' . PHP_EOL);
             $movie = Array();
             for ($i = 1; $i <= 20; $i++) {
                 $movie[$i] = new Movie();
                 $movie[$i]->setTitle($faker->unique()->movie());
 
-                $movie[$i]->setTitleSlug($this->slugger->slug($movie[$i]->getTitle())->lower());
+                // Pour le slug, on "slugify" avec notre service
+                $sluggedTitle = $this->mySlugger->slugify($movie[$i]->getTitle());
+                // On met à jour $movie
+                $movie[$i]->setSlug($sluggedTitle);
 
                 $movie[$i]->setReleaseDate($faker->dateTimeBetween('-80years', 'now'));
                 $movie[$i]->setDuration($faker->numberBetween(15, 360));
@@ -129,7 +135,14 @@ class AppFixtures extends Fixture
                 $manager->persist($movie[$i]);
             }
 
-            // Personnes
+            
+            //      ____                                            
+            //     / __ \___  ______________  ____  ____  ___  _____
+            //    / /_/ / _ \/ ___/ ___/ __ \/ __ \/ __ \/ _ \/ ___/
+            //   / ____/  __/ /  (__  ) /_/ / / / / / / /  __(__  ) 
+            //  /_/    \___/_/  /____/\____/_/ /_/_/ /_/\___/____/  
+            //                      
+            //                                
             print('FAKER PERSONS' . PHP_EOL);
             $person = Array();
             for ($i = 1; $i <= 20; $i++) {
@@ -141,17 +154,24 @@ class AppFixtures extends Fixture
                 $manager->persist($person[$i]);                
             }
 
-             // Castings
+             
+            //     ______           __  _                 
+            //    / ____/___ ______/ /_(_)___  ____ ______
+            //   / /   / __ `/ ___/ __/ / __ \/ __ `/ ___/
+            //  / /___/ /_/ (__  ) /_/ / / / / /_/ (__  ) 
+            //  \____/\__,_/____/\__/_/_/ /_/\__, /____/  
+            //                              /____/        
+            //
              print('FAKER CASTINGS' . PHP_EOL);
             $casting = Array();
-            for ($c = 1; $c < 100; $c++) {
+            for ($i = 1; $i < 100; $i++) {
                 $casting[$i] = new Casting();
                 $casting[$i]->setRole($faker->character());
                 $casting[$i]->setCreditOrder(mt_rand(1, 10));
 
                 // On va chercher un film au hasard dans la liste des films créée au-dessus
                 // Variante avec mt_rand et count
-                $randomMovie = $movie[array_rand($movie)];
+                $randomMovie = $movie[mt_rand(1, count($movie))];
                 $casting[$i]->setMovie($randomMovie);
 
                 $randomPerson = $person[array_rand($person)];

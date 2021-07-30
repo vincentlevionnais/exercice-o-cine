@@ -39,13 +39,13 @@
 
             <br><br>
 
-            <a href="{{path('back_movie_edit', {titleSlug: movie.titleSlug})}}">
+            <a href="{{path('back_movie_edit', {id: movie.id})}}">
             <div class = "container card card-btn button-edit">
                 <h3>Edit</h3>
             </div>
             </a>
 
-             <a href="{{path('back_movie_delete', {titleSlug: movie.titleSlug}) }}" onclick="return confirm('Voulez-vous supprimez : {{ movie.title }} ?')">
+             <a href="{{path('back_movie_delete', {id: movie.id}) }}" onclick="return confirm('Voulez-vous supprimez : {{ movie.title }} ?')">
             <div class = "container card card-btn  button-delete" >
                 <h3>Delete</h3>
             </div>

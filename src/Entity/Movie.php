@@ -9,12 +9,17 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Classe qui représente la table "movie" et ses enregistrements
  * 
  * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * 
+ * Unicité sur les propriétés $title et $slug
+ * @UniqueEntity("title")
+ * @UniqueEntity("slug")
  */
 class Movie
 {
@@ -36,7 +41,7 @@ class Movie
     /**
      * Titre
      * 
-     * @ORM\Column(type="string", length=211)
+     * @ORM\Column(type="string", length=211, unique = true)
      * 
      * @Assert\NotBlank
      * @Assert\Length(max=211)
@@ -103,9 +108,9 @@ class Movie
     private $rating;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=211, unique=true)
      */
-    private $titleSlug;
+    private $slug;
 
     public function __construct()
     {
@@ -327,15 +332,15 @@ class Movie
 
         return $this;
     }
-
-    public function getTitleSlug(): ?string
+    
+    public function getSlug(): ?string
     {
-        return $this->titleSlug;
+        return $this->slug;
     }
 
-    public function setTitleSlug(string $titleSlug): self
+    public function setSlug(string $slug): self
     {
-        $this->titleSlug = $titleSlug;
+        $this->slug = $slug;
 
         return $this;
     }

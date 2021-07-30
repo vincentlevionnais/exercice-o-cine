@@ -32,9 +32,8 @@ class MainController extends AbstractController
     }
 
     /**
-     * Affiche un film
-     * 
-     * @Route("/movie/{titleSlug}", name="movie_read")
+     * Affiche un film selon son slug
+     * @Route("/movie/{slug}", name="movie_read")
      */
     public function movieRead(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
     {
@@ -57,7 +56,7 @@ class MainController extends AbstractController
     /**
      * Commenter un film
      * 
-     * @Route("/movie/{titleSlug}/add/review", name="movie_add_review", methods={"GET", "POST"})
+     * @Route("/movie/{slug}/add/review", name="movie_add_review", methods={"GET", "POST"})
      */
     public function movieAddReview(Movie $movie = null, Request $request): Response
     {
@@ -94,7 +93,7 @@ class MainController extends AbstractController
             $em->persist($review);
             $em->flush();
 
-            return $this->redirectToRoute('movie_read', ['id' => $movie->getId()]);
+            return $this->redirectToRoute('movie_read', ['slug' => $movie->getSlug()]);
         }
         
 

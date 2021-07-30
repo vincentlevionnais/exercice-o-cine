@@ -14,6 +14,7 @@ use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\CastingRepository;
+use App\Service\MySlugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +66,7 @@ class MovieController extends AbstractController
         /**
          * Movie Read
          * 
-         * @Route("back/movie/read/{titleSlug}", name="back_movie_read", methods={"GET"})
+         * @Route("back/movie/read/{id<\d+>}", name="back_movie_read", methods={"GET"})
          */
         public function movieRead(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
         {
@@ -97,9 +98,9 @@ class MovieController extends AbstractController
         /**
          * Movie Edit
          * 
-         * @Route("/back/movie/edit/{titleSlug}", name="back_movie_edit", methods={"GET", "POST"})
+         * @Route("/back/movie/edit/{id<\d+>}", name="back_movie_edit", methods={"GET", "POST"})
          */
-        public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
+        public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator, MySlugger $mySlugger): Response
         {
             // 404 ?
             if ($movie === null) {
@@ -111,6 +112,8 @@ class MovieController extends AbstractController
             $form->handleRequest($request);
     
             if ($form->isSubmitted() && $form->isValid()) {
+
+                $movie->setSlug($mySlugger->slugify($movie->getTitle()));
     
                 $em = $this->getDoctrine()->getManager();
                 // Pas de persist() pour un edit
@@ -118,7 +121,7 @@ class MovieController extends AbstractController
 
                 $this->addFlash('success', $messageGenerator->getRandomMessage());
                 
-                return $this->redirectToRoute('back_movie_read', ['titleSlug' => $movie->getTitleSlug()]);
+                return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
                 
             }
     
@@ -138,7 +141,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
          */
-        public function add(Request $request, MessageGenerator $messageGenerator, SluggerInterface $sluggerInterface): Response
+        public function add(Request $request, MessageGenerator $messageGenerator, MySlugger $mySlugger): Response
         {
                 $movie = new Movie();
 
@@ -148,8 +151,7 @@ class MovieController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                $titleSlug = $sluggerInterface->slug($movie->getTitle())->lower();
-                $movie->setTitleSlug($titleSlug);
+                $movie->setSlug($mySlugger->slugify($movie->getTitle()));
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($movie);
@@ -157,7 +159,7 @@ class MovieController extends AbstractController
 
                 $this->addFlash('success', $messageGenerator->getRandomMessage());
 
-                return $this->redirectToRoute('back_movie_read', ['titleSlug' => $movie->getTitleSlug()]);
+                return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
                 }
 
                 // Affiche le form
@@ -177,7 +179,7 @@ class MovieController extends AbstractController
          * 
          * @todo en GET à convertir en POST ou mieux en DELETE
          * 
-         * @Route("/back/movie/delete/{titleSlug}", name="back_movie_delete", methods={"GET"})
+         * @Route("/back/movie/delete/{id<\d+>}", name="back_movie_delete", methods={"GET"})
          */
         public function delete(Movie $movie = null,MessageGenerator $messageGenerator, EntityManagerInterface $entityManager): Response
         {
