@@ -12,14 +12,11 @@
         <div class="description">
 
 {% include "/front/main/_form_add_review.html.twig" %}
-
         </div>
 
-        {% if movie.poster is not null %}
-            <div class="poster">
-                <img src="{{ asset('/images/default-movie.jpg') }}">
-            </div>
-        {% endif %}
+        <div class="poster">
+            <img src="{{ movie.poster ?? asset('/images/default-movie.jpg') }}">
+        </div>
 
     </div>
 

@@ -6,7 +6,7 @@
 
     <div class ="title">
         <h2>All Users <i class="fas fa-users-cog"></i></h2>
-            <button class="button-validate"><a href="{{ path('back_user_new') }}">Create new</a></button>
+            <a href="{{ path('back_user_new') }}"><button class="button-validate">Create new</button></a>
     </div>
 
     <table class="table">
@@ -25,8 +25,8 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>
-                    <button class="card-btn button-validate"><a href="{{ path('back_user_show', {'id': user.id}) }}">show</a></button>
-                    <button class="card-btn button-validate button-edit"><a href="{{ path('back_user_edit', {'id': user.id}) }}">edit</a></button>
+                    <a href="{{ path('back_user_show', {'id': user.id}) }}"><button class="card-btn button-validate">show</button></a>
+                    <a href="{{ path('back_user_edit', {'id': user.id}) }}"><button class="card-btn button-validate button-edit">edit</button></a>
                 </td>
             </tr>
         {% else %}
