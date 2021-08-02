@@ -4,11 +4,13 @@ namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -66,12 +68,23 @@ class UserController extends AbstractController
     /**
      * @Route("/back/user/edit/{id<\d+>}", name="back_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Hashage du mot de passe que si on a renseigné le champ mot de passe
+            // Si le mot de passe du form n'est pas vide
+            // c'est qu'on peut le changer !
+            if (!empty($form->get('password')->getData())) {
+                // C'est là qu'on encode le mot de passe du User (qui se trouve dans $user)
+                $hashedPassword = $userPasswordHasher->hashPassword($user, $form->get('password')->getData());
+                // On réassigne le mot passe encodé dans le User
+                $user->setPassword($hashedPassword);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);

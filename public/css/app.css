@@ -313,7 +313,21 @@ li {
     display: block;
     margin-left : 2rem;
     margin-bottom: 0.5rem;
+}
 
+#user_edit_roles {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+#user_edit_roles > input {
+
+    position: absolute;
+    margin-top: 3px;
+}
+#user_edit_roles > label {
+    display: block;
+    margin-left : 2rem;
+    margin-bottom: 0.5rem;
 }
 
 #movie_genres {

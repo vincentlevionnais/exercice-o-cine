@@ -5,13 +5,14 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,11 +33,21 @@ class UserType extends AbstractType
                 ->add('password', RepeatedType::class, [
                     'type' => PasswordType::class,
                     'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                    'required' => true,
+                    // Si besoin de remplacer un "null" par une valeur, on peut utiliser
+                    // @link https://symfony.com/doc/current/reference/forms/types/password.html#empty-data
+                    // 'empty_data' => '',
+                    'mapped' => false,
+                    //'required' => true,
                     'first_options'  => [
-                        'constraints' => new NotBlank(),
+                        'constraints' => [
+                            new Regex("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/"),
+                            new NotCompromisedPassword(),
+                    ],
+
+                        'attr' => [ 'placeholder' => 'Laisser vide si inchangé...'],
+
                         'label' => 'Mot de passe',
-                        'help' => 'Minimum eight characters, at least one letter, one number and one special character.'
+                        'help' => '8 caractères minimum, au moins une lettre, un chiffre et un caractère spécial.',
                     ],
                     'second_options' => ['label' => 'Répéter le mot de passe'],
                 ])
