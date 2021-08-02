@@ -60,14 +60,23 @@
                     </nav>
                     {% if is_granted('ROLE_MANAGER') %}
                         {% include 'back/subnav.html.twig' %}
-                    {% endif %}          
+                    {% endif %}                       
+
             </header>
 
             <main> 
+                {# Widget film au hasard #}
+                {% if randomMovie is defined %}  
+                    <div class= "widget-random">
+                        <p>Un film au hasard : <a href="{{ path('movie_read', {slug: randomMovie.slug}) }}">{{ randomMovie.title }}</a></p>
+                    </div>
+                {% endif %}
 
                 {{ include('_flash_messages.html.twig') }}
 
                 {% block body %}{% endblock %}
+
+
 
             </main>
 

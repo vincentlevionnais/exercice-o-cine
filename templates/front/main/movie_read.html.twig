@@ -16,7 +16,7 @@
         <div class="description">
 
             <p>Release date : {{movie.releaseDate|date('d/m/Y')}}</p>
-            <p>Duration : {{movie.duration|date('H:i')}}</p>
+            <p>Duration : {{movie.duration|date("i:s")}}</p>
 
             <br>
             
@@ -79,7 +79,8 @@
                         <li>Note : {{review.rating}}/5</li>
                         <li>Réactions : {% for reaction in review.reactions %} 
                         {{reaction}}{% endfor %}</li>
-                        <li>{{review.content}}</li>
+                        <br>
+                        <li><i>"{{review.content}}"</i></li>
                     </ul>
                     
                     </div>    

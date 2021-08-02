@@ -19,7 +19,6 @@ header {
     padding: 0 2rem;
     color: #fff;
     box-shadow:0 2px 5px #43719b91;
-    margin-bottom: 1.5rem;
 }
 
 .subnav{
@@ -277,6 +276,19 @@ li {
     align-content: stretch;
     align-items: flex-start;
     margin-bottom: 2rem;
+}
+
+.widget-random {
+    justify-content: center;
+    display: flex;
+    padding-top: -4rem;
+    box-shadow: 2px 2px 7px #43709b62;
+    padding : 0.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #fff8e3;
+}
+.widget-random a:hover{
+    text-decoration: underline;
 }
 
 .description {
