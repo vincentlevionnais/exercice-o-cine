@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Classe qui représente la table "movie" et ses enregistrements
@@ -39,6 +40,7 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"movies_get"})
      */
     private $id;
 
@@ -49,6 +51,7 @@ class Movie
      * 
      * @Assert\NotBlank
      * @Assert\Length(max=211)
+     * @Groups({"movies_get"})
      */
     private $title;
 
@@ -70,6 +73,7 @@ class Movie
      * @ORM\Column(type="datetime")
      * 
      * @Assert\NotBlank
+     * @Groups({"movies_get"})
      */
     private $releaseDate;
 
@@ -79,6 +83,7 @@ class Movie
      * @Assert\NotBlank
      * @Assert\Positive
      * @Assert\LessThanOrEqual(1440)
+     * @Groups({"movies_get"})
      */
     private $duration;
 
@@ -87,17 +92,21 @@ class Movie
      * @ORM\OrderBy({"name"="ASC"})
      * 
      * @Assert\Count(min=1)
+     * @Groups({"movies_get"})
+     * 
      */
     private $genres;
 
     /**
      * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", cascade={"remove"})
      * @ORM\OrderBy({"creditOrder" = "ASC"})
+     * @Groups({"movies_get"})
      */
     private $castings;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"movies_get"})
      */
     private $poster;
 
@@ -113,6 +122,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=211, unique=true)
+     * @Groups({"movies_get"})
      */
     private $slug;
 
