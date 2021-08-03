@@ -112,8 +112,6 @@ class MovieController extends AbstractController
             $form->handleRequest($request);
     
             if ($form->isSubmitted() && $form->isValid()) {
-
-                $movie->setSlug($mySlugger->slugify($movie->getTitle()));
     
                 $em = $this->getDoctrine()->getManager();
                 // Pas de persist() pour un edit
@@ -150,8 +148,6 @@ class MovieController extends AbstractController
                 $form->handleRequest($request);
 
                 if ($form->isSubmitted() && $form->isValid()) {
-
-                $movie->setSlug($mySlugger->slugify($movie->getTitle()));
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($movie);

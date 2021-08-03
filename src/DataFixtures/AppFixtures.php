@@ -317,7 +317,7 @@ class AppFixtures extends Fixture
         /* 5 */    'Comédie',
         /* 6 */    'Romance',
         /* 7 */    'Thriller',
-        /* 8 */    'Romance',
+        /* 8 */    'Action',
         ];
         
         foreach($mygenres as $name) {
