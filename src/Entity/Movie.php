@@ -71,7 +71,6 @@ class Movie
 
     /**
      * @ORM\Column(type="datetime")
-     * 
      * @Assert\NotBlank
      * @Groups({"movies_get"})
      */
