@@ -59,7 +59,7 @@ class RandomMovieSubscriber implements EventSubscriberInterface
             return;
         }
 
-        dump("Subscriber appelé !");
+        //dump("Subscriber appelé !");
 
         // 2. On va chercher un film au hasard
         // @todo Utiliser ORDER BY RAND() LIMIT 1

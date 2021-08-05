@@ -77,7 +77,7 @@ security:
         ###
 
         # Front : Si ROLE_USER : ajouter une critique sur un film.
-        - { path: ^/movie/\d+/add/review, roles: ROLE_USER }
+        - { path: ^/movie/.+/add/review, roles: ROLE_USER }
         # équivaut à - { path: ^/movie/[0-9]+/add/review, roles: ROLE_USER }
 
         # Admin : Si ROLE_MANAGER : accès aux pages de listes movie, genres etc. et pages show (si existantes).
