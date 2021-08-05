@@ -26,7 +26,7 @@ class MovieControllerTest extends WebTestCase
     public function testRead(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/back/movie/read/1');
+        $crawler = $client->request('GET', '/back/movie/read/5');
 
         $this->assertResponseRedirects();
     }
@@ -34,4 +34,33 @@ class MovieControllerTest extends WebTestCase
     /**
      * Edit...
      */
+    public function testEdit(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/back/movie/edit/5');
+
+        $this->assertResponseRedirects();
+    }
+
+    /**
+     * Add
+     */
+    public function testAdd(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/back/movie/add');
+
+        $this->assertResponseRedirects();
+    }
+
+    /**
+     * Delete
+     */
+    public function testDelete(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/back/movie/delete/5');
+
+        $this->assertResponseRedirects();
+    }
 }
