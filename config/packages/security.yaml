@@ -30,6 +30,8 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+            json_login:
+                check_path: /api/login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -40,6 +42,18 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+
+        ###
+        ### Routes API
+        ###
+
+        # POST sur Movie = ROLE_ADMIN
+        - { path: ^/api/movies, roles : ROLE_ADMIN, methods: POST }
+
+        ###
+        ### Routes Application Web classique
+        ###
+
         # Front : Si user ANONYME : page d'accueil + fiche film seulement.
         # => rien à configurer, c'est l'accès par défaut
 
@@ -48,12 +62,13 @@ security:
         # équivaut à - { path: ^/movie/[0-9]+/add/review, roles: ROLE_USER }
 
         # Admin : Si ROLE_MANAGER : accès aux pages de listes movie, genres etc. et pages show (si existantes).
-        - { path: ^/back/.+/(add|edit|delete), roles: ROLE_ADMIN }
+        # [a-z]+ = n'importe quel caractère de a à z (job, movie, user, etc.) de 1 à +
+        - { path: ^/back/[a-z]+/(add|edit|delete), roles: ROLE_ADMIN }
         
 
         # Admin : Sécuriser toutes les routes /add /edit /delete avec ROLE_ADMIN.
         # ^ = commence par
-        - { path: ^/back/(movie|job|user)/(browse|read), roles: ROLE_MANAGER }
+        - { path: ^/back/[a-z]+/(browse|read), roles: ROLE_MANAGER }
         
 
     # https://symfony.com/doc/current/security.html#hierarchical-roles
