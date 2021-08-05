@@ -116,6 +116,10 @@ class Movie
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\Type("int") 
+     * @Assert\Length(max = 1)
+     * @Assert\Choice({5, 4, 3, 2, 1}) 
      */
     private $rating;
 
