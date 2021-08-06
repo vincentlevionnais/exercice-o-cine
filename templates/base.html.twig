@@ -11,8 +11,8 @@
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="./css/app.css">
-            <link rel="icon" type="image/x-icon" href="{{ asset('./images/favicon.png') }}" />
+            <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+            <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.png') }}" />
         {% endblock %}
 
         {% block javascripts %}
@@ -24,7 +24,7 @@
             <header>
                 <a href="{{path('home')}}">
                     <div class="brand-logo">
-                        <img src="./images/m2H7G6K9G6A0N4m2.png" alt="Brand Logo">
+                        <img src="{{ asset('/images/m2H7G6K9G6A0N4m2.png')}}" alt="Brand Logo">
                     </div>
                     <div class="brand-name">
                         <h1>O'Ciné</h1>
