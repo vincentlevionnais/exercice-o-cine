@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class JobController extends AbstractController
 {
     /**
-     * @Route("/", name="back_job_index", methods={"GET"})
+     * @Route("/browse", name="back_job_index", methods={"GET"})
      */
     public function index(JobRepository $jobRepository): Response
     {
@@ -37,9 +37,9 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="back_job_new", methods={"GET","POST"})
+     * @Route("/add", name="back_job_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function add(Request $request): Response
     {
         $job = new Job();
         $form = $this->createForm(JobType::class, $job);
@@ -60,7 +60,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="back_job_show", methods={"GET"})
+     * @Route("/read/{id}", name="back_job_show", methods={"GET"})
      */
     public function show(Job $job): Response
     {
@@ -70,7 +70,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="back_job_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="back_job_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Job $job): Response
     {
@@ -90,7 +90,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="back_job_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="back_job_delete", methods={"POST"})
      */
     public function delete(Request $request, Job $job): Response
     {

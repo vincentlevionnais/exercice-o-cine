@@ -24,6 +24,41 @@ class MainControllerTest extends WebTestCase
     }
 
     /**
+     * Test movie show
+     * 
+     * /!\ Idéalement on aura un jeu de Fixtures de test
+     * et on accèdera à request('GET', '/movie/film-1')
+     * 
+     * Ci-dessous un exemple si besoin de naviguer dans les pages
+     * et de cliquer sur des liens
+     */
+    public function testMovieShow(): void
+    {
+        // Crée un client HTTP
+        $client = static::createClient();
+        // Envoie une requête vers l'url '/'
+        $crawler = $client->request('GET', '/');
+
+        // Sélectionner le premier lien de la liste des films
+        $selectedLink = $crawler->filter('main .container a');
+        
+        // On mémorise le texte du lien
+        $textLink = $selectedLink->text();
+
+        // On récupère le lien
+        $link = $selectedLink->link();
+
+        // Cliquer dessus
+        $client->click($link);
+
+        // Vérifier que le réponse est successful
+        $this->assertResponseIsSuccessful();
+
+        // Le texte correspond
+        $this->assertSelectorTextSame('.title h2', $textLink);
+    }
+
+    /**
      * Test de la vue d'un film selon son slug
      */
     public function testMovieRead(): void
