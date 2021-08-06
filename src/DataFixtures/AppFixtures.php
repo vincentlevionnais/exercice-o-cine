@@ -72,8 +72,8 @@ class AppFixtures extends Fixture
 
 
         
-
-
+    
+/*
         //  ███╗   ███╗███████╗███████╗    ███████╗██╗██╗     ███╗   ███╗███████╗
         //  ████╗ ████║██╔════╝██╔════╝    ██╔════╝██║██║     ████╗ ████║██╔════╝
         //  ██╔████╔██║█████╗  ███████╗    █████╗  ██║██║     ██╔████╔██║███████╗
@@ -310,14 +310,14 @@ class AppFixtures extends Fixture
         //                      
         //
         $mygenres = [
-        /* 1 */    'Science fiction',
-        /* 2 */    'Drame',
-        /* 3 */    'Aventure',
-        /* 4 */    'Biopic',
-        /* 5 */    'Comédie',
-        /* 6 */    'Romance',
-        /* 7 */    'Thriller',
-        /* 8 */    'Action',
+            'Science fiction',
+            'Drame',
+            'Aventure',
+            'Biopic',
+            'Comédie',
+            'Romance',
+            'Thriller',
+            'Action',
         ];
         
         foreach($mygenres as $name) {
@@ -327,9 +327,9 @@ class AppFixtures extends Fixture
 
             $manager->persist($genre);
         }
+*/
 
 
-/*
         //  ███████╗ █████╗ ██╗  ██╗███████╗██████╗ 
         //  ██╔════╝██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
         //  █████╗  ███████║█████╔╝ █████╗  ██████╔╝
@@ -449,7 +449,7 @@ class AppFixtures extends Fixture
                 $manager->persist($casting[$i]);
 
             }
-*/
+
 
         $manager->flush();
     }
