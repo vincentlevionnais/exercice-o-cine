@@ -134,7 +134,7 @@ class AppFixtures extends Fixture
 
                 $movie[$i]->setReleaseDate($faker->dateTimeBetween('-80years', 'now'));
                 $movie[$i]->setDuration($faker->numberBetween(15, 360));
-                $movie[$i]->setPoster('images/star.png');
+                $movie[$i]->setPoster('images/default-movie.jpg');
                 //$movie[$i]->setPoster($faker->unique()->imageUrl(400, 600, 'city', true, 'Faker'));
                 $movie[$i]->setRating($faker->numberBetween(1,5));
 
