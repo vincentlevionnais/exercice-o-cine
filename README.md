@@ -7,7 +7,7 @@ Ce projet a été réalisé dans le cadre de ma formation pour m'initier au fram
 ## Le projet O'ciné
 
 Il s'agit d'un site pour afficher et gérer les informations de films, avec des commentaires et avis d'utilisateurs.
-Il inclus également l'accès à un back office notamment pour la gestion des roles (admin, manager, user).
+Il inclut également l'accès à un back-office notamment pour la gestion des roles (admin, manager, user).
 Je n'ai pas utilisé bootstrap pour me confronter à la réalisation d'un css très personnel.
 
 ## Installation du projet
