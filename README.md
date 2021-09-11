@@ -15,7 +15,7 @@ Je n'ai pas utilisé bootstrap pour me confronter à la réalisation d'un css tr
 Après avoir cloné le projet :
 
 -faire la commande `composer install`  
--générer les clés JWT `bin/console lexik:jwt:generate-keypair`
+-générer les clés JWT `bin/console lexik:jwt:generate-keypair`  
 -créer le fichier .env.local à partir du fichier .env, et y renseigner vos informations de DATABASE_URL.  
 -créer la base de données avec `bin/console doctrine:database:create`  
 -migrer en base les migrations avec `bin/console doctrine:migrations:migrate`  
