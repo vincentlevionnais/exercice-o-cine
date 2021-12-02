@@ -100,7 +100,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/edit/{id<\d+>}", name="back_movie_edit", methods={"GET", "POST"})
          */
-        public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator, MySlugger $mySlugger): Response
+        public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
         {
             // 404 ?
             if ($movie === null) {
@@ -139,7 +139,7 @@ class MovieController extends AbstractController
          * 
          * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
          */
-        public function add(Request $request, MessageGenerator $messageGenerator, MySlugger $mySlugger): Response
+        public function add(Request $request, MessageGenerator $messageGenerator): Response
         {
                 $movie = new Movie();
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -35,6 +36,15 @@ class MovieType extends AbstractType
                 // 'data' => new DateTime('1986-04-12'),
             ])
             ->add('duration')
+            ->add('rating', ChoiceType::class, [
+                'choices' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                ],
+            ])
             ->add('poster', UrlType::class)
             // Cette note sera calculée via les Reviews front
             // on ne la manipule pas manuellement

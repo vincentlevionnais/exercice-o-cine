@@ -35,7 +35,7 @@ class MainController extends AbstractController
      * Affiche un film selon son slug
      * @Route("/movie/{slug}", name="movie_read")
      */
-    public function movieRead(Movie $movie = null, CastingRepository $castingRepository, ReviewRepository $reviewRepository)
+    public function movieRead(Movie $movie = null, CastingRepository $castingRepository)
     {
         // Si film non trouvé
         if ($movie === null) {
@@ -45,11 +45,10 @@ class MainController extends AbstractController
         // Pour classer les castings, on utilise notre requête custom
         // qu'on oublie pas d'envoyer à la vue
         $castings = $castingRepository->findAllByMovieJoinedToPerson($movie);
-        $reviews = $reviewRepository->findAll();
 
         return $this->render('front/main/movie_read.html.twig', [
             'movie' => $movie,
-            'castings' => $castings,
+            'castings' => $castings
         ]);
     }
 
